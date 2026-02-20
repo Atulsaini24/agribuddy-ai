@@ -558,14 +558,14 @@ async function fetchWeather(lat: number, lon: number): Promise<WeatherData> {
       dewPoint: Math.round(w.current.dew_point_2m),
     },
     hourly: w.hourly.time.slice(startIdx, startIdx + 24).map((time: string, i: number) => ({
-      time,
+      time: time,
       temp: Math.round(w.hourly.temperature_2m[startIdx + i]),
       weatherCode: w.hourly.weather_code[startIdx + i],
       precip: w.hourly.precipitation[startIdx + i] ?? 0,
       isDay: w.hourly.is_day[startIdx + i] ?? 1,
     })),
     daily: w.daily.time.map((date: string, i: number) => ({
-      date,
+      date: date,
       tempMax: Math.round(w.daily.temperature_2m_max[i]),
       tempMin: Math.round(w.daily.temperature_2m_min[i]),
       weatherCode: w.daily.weather_code[i],

@@ -11,6 +11,9 @@ import CropScanner from "./pages/CropScanner";
 import Weather from "./pages/Weather";
 import KnowledgeBase from "./pages/KnowledgeBase";
 import NotFound from "./pages/NotFound";
+import Login from "./pages/Login";
+import SignUp from "./pages/SignUp";
+import Profile from "./pages/Profile";
 
 const queryClient = new QueryClient();
 
@@ -28,12 +31,15 @@ const App = () => (
             <Route path="/scan" element={<CropScanner />} />
             <Route path="/weather" element={<Weather />} />
             <Route path="/knowledge" element={<KnowledgeBase />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<SignUp />} />
+            <Route path="/profile" element={<Profile />} />
             <Route path="*" element={<NotFound />} />
-          </Routes>
-        </BrowserRouter>
-      </TooltipProvider>
-    </LanguageProvider>
-  </QueryClientProvider>
+          </Routes >
+        </BrowserRouter >
+      </TooltipProvider >
+    </LanguageProvider >
+  </QueryClientProvider >
 );
 
 export default App;

@@ -4,13 +4,41 @@ import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { useLanguage, LANGUAGES } from "@/contexts/LanguageContext";
 import BottomNav from "@/components/BottomNav";
+import { useEffect, useState } from "react";
 
 const Index = () => {
   const navigate = useNavigate();
   const { language, setLanguage, t } = useLanguage();
+  const [user, setUser] = useState<any>(null);
+
+  useEffect(() => {
+    const storedUser = localStorage.getItem("user");
+    if (storedUser) {
+      try {
+        setUser(JSON.parse(storedUser));
+      } catch (error) {
+        console.error("Failed to parse user from local storage", error);
+      }
+    }
+  }, []);
 
   return (
-    <div className="flex min-h-screen flex-col bg-background pb-20">
+    <div className="flex min-h-screen flex-col bg-background pb-20 relative">
+      <div className="absolute top-4 right-4 z-10">
+        {user ? (
+          <div className="flex items-center justify-center h-10 w-10 rounded-full bg-primary text-primary-foreground font-bold shadow-md cursor-pointer" onClick={() => navigate("/profile")}>
+            {user.email?.charAt(0).toUpperCase()}
+          </div>
+        ) : (
+          <Button
+            className="bg-green-600 hover:bg-green-700 text-white font-semibold shadow-md transition-all hover:scale-105"
+            size="lg"
+            onClick={() => navigate("/login")}
+          >
+            {t("Login/Signup")}
+          </Button>
+        )}
+      </div>
       {/* Hero Section */}
       <header className="flex flex-col items-center px-6 pt-10 pb-6 text-center">
         <motion.div
@@ -49,11 +77,10 @@ const Index = () => {
             <button
               key={lang.code}
               onClick={() => setLanguage(lang.code)}
-              className={`flex flex-col items-center gap-1 rounded-xl border-2 px-2 py-3 text-xs font-medium transition-all ${
-                language === lang.code
+              className={`flex flex-col items-center gap-1 rounded-xl border-2 px-2 py-3 text-xs font-medium transition-all ${language === lang.code
                   ? "border-primary bg-primary/10 text-primary"
                   : "border-border bg-card text-foreground hover:border-primary/40"
-              }`}
+                }`}
             >
               <span className="text-lg">{lang.icon}</span>
               <span className="truncate">{lang.nativeName}</span>
